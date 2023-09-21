@@ -1,6 +1,10 @@
 import java.util.Scanner;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 
 public class TipCalculator {
+
+    private static final DecimalFormat df = new DecimalFormat("0.00");
     public static void main(String[] args) {
 
         String[] itemList = new String[100];
@@ -21,7 +25,7 @@ public class TipCalculator {
         double costItem = 0;
         double totalCost = 0;
 
-        for (int i =0 ; costItem != -1; i++) {
+        for (int i = 0 ; costItem != -1; i++) {
             System.out.print("Enter a cost in dollars and cents, e.g. 12.50 (-1 to end): ");
             costItem = sc.nextDouble();
             sc.nextLine();
@@ -31,16 +35,31 @@ public class TipCalculator {
                 item = sc.nextLine();
                 itemList[i] = item;
             } else {
-                break;
+                continue;
             }
         }
 
         double costAfterTip = totalCost * ((tip/100.0) + 1);
+        double totalTip = costAfterTip - totalCost;
+        double perCost1 = totalCost / people;
+        double tipPer = totalTip / people;
+        double perCost2 = costAfterTip / people;
 
         System.out.println("----------------------------------");
         System.out.println("Total bill before tip: $" + totalCost);
         System.out.println("Total percentage: " + tip + "%");
-        System.out.println("Total bill with tip: " + (double) Math.round(costAfterTip* 100) / 100);
+        System.out.println("Total tip : $" + df.format(totalTip));
+        System.out.println("Total bill with tip: $" + df.format(costAfterTip));
+        System.out.println("Per person cost before tip: $" + df.format(perCost1));
+        System.out.println("Tip per person: $" + df.format(tipPer));
+        System.out.println("Total cost per person: $" + df.format(perCost2));
+        System.out.println("----------------------------------");
+
+        System.out.println("Items ordered: ");
+        for (String j: itemList) {
+            System.out.println(j);
+        }
+
 
 
     }
